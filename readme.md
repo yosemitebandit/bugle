@@ -1,6 +1,7 @@
 A good website, built from yaml and markdown.
 A python script grabs all of the docs in the `pages` directory and generates static html.
 
+
 ### Source pages
 Each page has meta info at the top in yaml.
 The specified title and date are injected into the page template.
@@ -9,6 +10,12 @@ The route parameter specifies where this page will end up.
 A template can be specified, as well as custom CSS and JS.
 
 The second half of each page is the actual content, and it's in markdown.
+
+
+### Building
+Generate the HTML output with:
+
+    $ fab dev build
 
 
 ### Deploying
