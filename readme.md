@@ -10,16 +10,17 @@ And each note and project is rendered and injected into templates.
 The organization of `src/`:
 
     - src/
-       |- home.html
-       |- about.html
+       |- meta/
        |- projects/
        |- notes/
        |- templates/
        |- css/
        \- js/
 
-That is to say, `home.html` and `about.html` are vanilla html, and frankly quite boring.
-The content is in `projects/` and `notes/`, in the form of markdown files:
+The root and about pages are contained in `meta/`.
+These pages are HTML, not markdown, and are injected into the `base.html` template.
+
+The real content is in `projects/` and `notes/`, in the form of markdown files:
 
     - src/
        |- projects/
@@ -63,13 +64,14 @@ Indices are built for these sections.
 The value of `thumb` is shown in the indices.
 Set a custom URL with the optional `route` parameter.
 
-Basic templates, guess where those are.
+Basic templates, those are where you'd expect.
 The project index will be tiles of photos, titles and a short description.
 Notes will be a title and blurb - they may get paginated.
 Tagged projects and notes can also be gathered up under one roof.
 
     - src/
        \- templates/
+           |- base.html
            |- project_index.html
            |- project.html
            |- note_index.html
