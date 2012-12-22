@@ -41,6 +41,13 @@ Each of these markdown files is secretly half `yaml`:
     tags:
         - python
         - twilio
+    group: projects
+    thumb: http://s3.aws.com/screenshot.png
+    css:
+        - css/never.css
+        - css/other.css
+    js:
+        - js/jquery.min.js
     ---
 
     ### oh, memory
@@ -50,6 +57,9 @@ Each of these markdown files is secretly half `yaml`:
     with *texts*.
 
 So that's `---` as a separator between the metadata and the content.
+In the metadata, the `group` is currently either `projects` or `notes`.
+Indices are built for these sections.
+The value of `thumb` is shown in the indices.
 
 Basic templates, guess where those are.
 The project index will be tiles of photos, titles and a short description.
@@ -64,7 +74,7 @@ Tagged projects and notes can also be gathered up under one roof.
            |- note.html
            \- tag.html
 
-And any custom styles or js for a note or project, the build script pulls those in:
+And any custom styles or js for a note or project, the build script pulls those in based on the metadata:
 
     - src/
        |- css/
