@@ -43,6 +43,7 @@ Each of these markdown files is secretly half `yaml`:
         - twilio
     group: projects
     thumb: http://s3.aws.com/screenshot.png
+    route: sms-time-capsule
     css:
         - css/never.css
         - css/other.css
@@ -60,6 +61,7 @@ So that's `---` as a separator between the metadata and the content.
 In the metadata, the `group` is currently either `projects` or `notes`.
 Indices are built for these sections.
 The value of `thumb` is shown in the indices.
+Set a custom URL with the optional `route` parameter.
 
 Basic templates, guess where those are.
 The project index will be tiles of photos, titles and a short description.
