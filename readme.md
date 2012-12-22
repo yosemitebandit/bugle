@@ -13,7 +13,7 @@ The organization of `src/`:
        |- meta/
        |- pages/
        |- templates/
-       \- static
+       \- static/
 
 The root and about pages are contained in `meta/`.
 These pages are HTML, not markdown, and are injected into the `base.html` template.
