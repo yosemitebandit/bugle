@@ -91,7 +91,7 @@ And any custom styles or js for a note or project, the build script pulls those 
 The build script does the following:
 
  1. gathers all the markdown files and validates their yaml
- 1.5 compiles `tags` and `groups`
+ 1. compiles `tags` and `groups`
  2. creates indices for all detected `groups` and `tags`
  3. sets up the vanilla pages..
  4. generates slugs and checks that they are unique
@@ -108,3 +108,10 @@ Generate the html pages with fabric
 
 ### Deploying
 Maybe `rsync` or S3.
+
+
+### Testing
+Test the build process with
+
+    $ ./path/to/venv/bin/activate
+    (venv)$ nosetests
