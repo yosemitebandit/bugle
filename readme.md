@@ -13,8 +13,7 @@ The organization of `src/`:
        |- meta/
        |- pages/
        |- templates/
-       |- css/
-       \- js/
+       \- static
 
 The root and about pages are contained in `meta/`.
 These pages are HTML, not markdown, and are injected into the `base.html` template.
@@ -79,14 +78,15 @@ Tagged projects and notes can also be gathered up under one roof.
 And any custom styles or js for a note or project, the build script pulls those in based on the metadata:
 
     - src/
-       |- css/
-       |   |- trebuchet.css
-       |   \- khmer-in-ubuntu.css
-       |
-       \- js/
-           |- khmer-in-ubuntu.js
-           |- meduele.js
-           \- never.js
+       \- static/
+           |- js/
+           |   |- khmer-in-ubuntu.js
+           |   |- meduele.js
+           |   \- never.js
+           |
+           \- css/
+               |- trebuchet.css
+               \- khmer-in-ubuntu.css
 
 
 ### Building
