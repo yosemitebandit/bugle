@@ -11,8 +11,7 @@ The organization of `src/`:
 
     - src/
        |- meta/
-       |- projects/
-       |- notes/
+       |- pages/
        |- templates/
        |- css/
        \- js/
@@ -20,16 +19,15 @@ The organization of `src/`:
 The root and about pages are contained in `meta/`.
 These pages are HTML, not markdown, and are injected into the `base.html` template.
 
-The real content is in `projects/` and `notes/`, in the form of markdown files:
+The real content is in `pages/` in the form of markdown files.
+Some of these pages are project write-ups, others are blog entries:
 
     - src/
-       |- projects/
-       |   |- trebuchet.md
-       |   |- never.md
-       |   \- meduele.md
-       |
-       \- notes/
+       \- pages/
+           |- trebuchet.md
+           |- never.md
            |- ps2keyboard-leonardo-port.md
+           |- meduele.md
            \- khmer-in-ubuntu.md
 
 Each of these markdown files is secretly half `yaml`:
@@ -42,7 +40,7 @@ Each of these markdown files is secretly half `yaml`:
     tags:
         - python
         - twilio
-    group: projects
+    section: projects
     thumb: http://s3.aws.com/screenshot.png
     route: sms-time-capsule
     css:
@@ -59,7 +57,7 @@ Each of these markdown files is secretly half `yaml`:
     with *texts*.
 
 So that's `---` as a separator between the metadata and the content.
-In the metadata, the `group` is currently either `projects` or `notes`.
+In the metadata, the `section` is currently either `projects` or `notes`.
 Indices are built for these sections.
 The value of `thumb` is shown in the indices.
 Set a custom URL with the optional `route` parameter.
@@ -95,8 +93,8 @@ And any custom styles or js for a note or project, the build script pulls those 
 The build script does the following:
 
  1. gathers all the markdown files and validates their yaml
- 1. compiles `tags` and `groups`
- 2. creates indices for all detected `groups` and `tags`
+ 1. compiles tags and sections
+ 2. creates indices for all detected sections and tags
  3. sets up the vanilla pages..
  4. generates slugs and checks that they are unique
  5. renders markdown
