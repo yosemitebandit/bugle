@@ -62,17 +62,14 @@ The value of `thumb` is shown in the indices.
 Set a custom URL with the optional `route` parameter.
 
 Basic templates, those are where you'd expect.
-The project index will be tiles of photos, titles and a short description.
-Notes will be a title and blurb - they may get paginated.
-Tagged projects and notes can also be gathered up under one roof.
+The section index will be tiles of photos, titles and a short description.
+Tagged can also be gathered up under one roof.
 
     - src/
        \- templates/
            |- base.html
-           |- project_index.html
-           |- project.html
-           |- note_index.html
-           |- note.html
+           |- section_index.html
+           |- page.html
            \- tag.html
 
 And any custom styles or js for a note or project, the build script pulls those in based on the metadata:
