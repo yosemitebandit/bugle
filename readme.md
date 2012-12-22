@@ -90,14 +90,15 @@ And any custom styles or js for a note or project, the build script pulls those 
 ### Building
 The build script does the following:
 
- 1. gathers all the markdown files and compiles `tags` and `groups`
+ 1. gathers all the markdown files and validates their yaml
+ 1.5 compiles `tags` and `groups`
  2. creates indices for all detected `groups` and `tags`
  3. sets up the vanilla pages..
  4. generates slugs and checks that they are unique
  5. renders markdown
  6. injects resultant html into templates
  7. pulls relevant css and js into templates
- 7. saves resulting files in output directory
+ 8. saves resulting files in output directory
 
 Generate the html pages with fabric
 
