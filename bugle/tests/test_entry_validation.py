@@ -36,8 +36,65 @@ class ValidationTest(unittest.TestCase):
             result = self.b.validate_entry(f)
             self.assertEqual(False, result[0])
 
+
+    ''' valid entries should ..validate
+    '''
     def test_valid_entry(self):
         filepath = '%s/uno.md' % self.b.source_path
         with open(filepath, 'r') as f:
             result = self.b.validate_entry(f)
             self.assertEqual(True, result[0])
+
+
+    ''' config files that lack required params
+    '''
+    def test_missing_title(self):
+        filepath = '%s/missing-title.md' % self.b.source_path
+        with open(filepath, 'r') as f:
+            result = self.b.validate_entry(f)
+            self.assertEqual(False, result[0])
+
+    def test_missing_blurb(self):
+        filepath = '%s/missing-blurb.md' % self.b.source_path
+        with open(filepath, 'r') as f:
+            result = self.b.validate_entry(f)
+            self.assertEqual(False, result[0])
+
+    def test_missing_tags(self):
+        filepath = '%s/missing-tags.md' % self.b.source_path
+        with open(filepath, 'r') as f:
+            result = self.b.validate_entry(f)
+            self.assertEqual(False, result[0])
+
+    def test_missing_creation_time(self):
+        filepath = '%s/missing-creation-time.md' % self.b.source_path
+        with open(filepath, 'r') as f:
+            result = self.b.validate_entry(f)
+            self.assertEqual(False, result[0])
+
+
+    ''' config files with empty required params
+    '''
+    def test_empty_title(self):
+        filepath = '%s/empty-title.md' % self.b.source_path
+        with open(filepath, 'r') as f:
+            result = self.b.validate_entry(f)
+            self.assertEqual(False, result[0])
+
+    def test_empty_blurb(self):
+        filepath = '%s/empty-blurb.md' % self.b.source_path
+        with open(filepath, 'r') as f:
+            result = self.b.validate_entry(f)
+            self.assertEqual(False, result[0])
+
+    def test_empty_tags(self):
+        filepath = '%s/empty-tags.md' % self.b.source_path
+        with open(filepath, 'r') as f:
+            result = self.b.validate_entry(f)
+            self.assertEqual(False, result[0])
+
+    def test_empty_creation_time(self):
+        filepath = '%s/empty-creation-time.md' % self.b.source_path
+        with open(filepath, 'r') as f:
+            result = self.b.validate_entry(f)
+            self.assertEqual(False, result[0])

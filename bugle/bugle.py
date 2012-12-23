@@ -50,10 +50,21 @@ class Bugle(object):
 
         # validate the yaml
         try:
-            yaml.load(data[0])
+            config = yaml.load(data[0])
         except:
             message = 'invalid yaml header'
             return (False, message)
+
+        # validates that all required params are present and not empty
+        required_params = ['title', 'blurb', 'tags', 'created']
+        for param in required_params:
+            if param not in config.keys():
+                message = 'yaml header is missing parameter "%s"' % param
+                return (False, message)
+
+            if not config[param]:
+                message = 'yaml parameter "%s" is invalid' % param
+                return (False, message)
 
         return (True, 'valid.')
 
