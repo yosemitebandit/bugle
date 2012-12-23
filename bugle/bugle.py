@@ -2,6 +2,7 @@
 ''' bugle
 a generator of static sites
 '''
+#from unidecode import unidecode
 import yaml
 
 
@@ -70,4 +71,18 @@ class Bugle(object):
 
         return set(tags)
 
+
+    def generate_slug(self, file_handler):
+        ''' generate a slug for an entry
+
+        returns 'trebuchet-part-two'
+        '''
+        config = yaml.load(file_handler.read().split('---')[0])
+        if 'route' in config.keys():
+            route = config['route']
+        else:
+            route = config['title']
+
+        # need to use unidecode and pipeline's techniques
+        return route.replace(' ', '-')
 
