@@ -36,3 +36,8 @@ class ValidationTest(unittest.TestCase):
             result = self.b.validate_entry(f)
             self.assertEqual(False, result[0])
 
+    def test_valid_entry(self):
+        filepath = '%s/uno.md' % self.b.source_path
+        with open(filepath, 'r') as f:
+            result = self.b.validate_entry(f)
+            self.assertEqual(True, result[0])
