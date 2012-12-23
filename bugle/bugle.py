@@ -22,7 +22,10 @@ class Bugle(object):
     
     def validate_entry(self, file_handler):
         ''' checks that an entry is properly formatted
-        returns (False, 'rationale')
+        needs one separator in the file
+        content before the separator needs to be yaml
+
+        returns (True|False, 'rationale')
         '''
         separator = '---'
         data = file_handler.read().split(separator)
