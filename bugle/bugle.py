@@ -15,9 +15,9 @@ class Bugle(object):
     saves the lot in an appropriate folder structure
     '''
 
-    def __init__(self, source_dir, out_dir):
-        self.source_dir = source_dir
-        self.out_dir = out_dir
+    def __init__(self, source_path, out_path):
+        self.source_path = source_path
+        self.out_path = out_path
 
     
     def validate_entry(self, file_handler):

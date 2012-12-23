@@ -19,19 +19,19 @@ class ValidationTest(unittest.TestCase):
         pass
 
     def test_bad_separator(self):
-        filepath = '%s/bad_separator.md' % self.source_path
+        filepath = '%s/bad_separator.md' % self.b.source_path
         with open(filepath, 'r') as f:
             result = self.b.validate_entry(f)
             self.assertEqual(False, result[0])
 
     def test_no_separator(self):
-        filepath = '%s/no_separator.md' % self.source_path
+        filepath = '%s/no_separator.md' % self.b.source_path
         with open(filepath, 'r') as f:
             result = self.b.validate_entry(f)
             self.assertEqual(False, result[0])
 
     def test_bad_yaml(self):
-        filepath = '%s/bad_yaml.md' % self.source_path
+        filepath = '%s/bad_yaml.md' % self.b.source_path
         with open(filepath, 'r') as f:
             result = self.b.validate_entry(f)
             self.assertEqual(False, result[0])
