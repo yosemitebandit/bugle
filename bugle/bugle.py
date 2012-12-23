@@ -7,7 +7,7 @@ import yaml
 
 class Bugle(object):
     ''' validating source files
-    complies tags and sections
+    compiles tags
     creates indices
     generates slugs
     injects rendered data into templates

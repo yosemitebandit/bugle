@@ -33,13 +33,14 @@ Each of these markdown files is secretly half `yaml`:
 
     title: never.md
     blurb: an sms time-capsule
-    when: September, 2012
+    created: September, 2012
+    updated: October, 2012
     ongoing: true
     where: San Francisco
     tags:
         - python
         - twilio
-    section: projects
+        - projects
     thumb: http://s3.aws.com/screenshot.png
     route: sms-time-capsule
     css:
@@ -56,19 +57,15 @@ Each of these markdown files is secretly half `yaml`:
     with *texts*.
 
 So that's `---` as a separator between the metadata and the content.
-In the metadata, the `section` is currently either `projects` or `notes`.
-Indices are built for these sections.
 The value of `thumb` is shown in the indices.
 Set a custom URL with the optional `route` parameter.
 
 Basic templates, those are where you'd expect.
-The section index will be tiles of photos, titles and a short description.
-Tagged can also be gathered up under one roof.
+Tagged entries can also be gathered up under one roof.
 
     - src/
        \- templates/
            |- base.html
-           |- section_index.html
            |- page.html
            \- tag.html
 
@@ -90,8 +87,8 @@ And any custom styles or js for a note or project, the build script pulls those 
 The build script does the following:
 
  1. gathers all the markdown files and validates their yaml
- 1. compiles tags and sections
- 2. creates indices for all detected sections and tags
+ 1. compiles tags
+ 2. creates indices for all detected tags
  3. sets up the vanilla pages..
  4. generates slugs and checks that they are unique
  5. renders markdown
