@@ -6,7 +6,8 @@ import yaml
 
 
 class Bugle(object):
-    ''' validating source files
+    ''' finding source files (entries)
+    validating these files
     compiles tags
     creates indices
     generates slugs
@@ -18,6 +19,15 @@ class Bugle(object):
     def __init__(self, source_path, out_path):
         self.source_path = source_path
         self.out_path = out_path
+
+
+    def discover_entries(self):
+        ''' recursively dig into source_path, looking for entries
+        this discovery allows authors to organize files however they'd like
+
+        returns set('/notes/hola.md', 'bike.md')
+        '''
+        pass
 
     
     def validate_entry(self, file_handler):
@@ -43,5 +53,19 @@ class Bugle(object):
             return (False, message)
 
         return (True, 'valid.')
+
+
+    def compile_tags(self, filepaths):
+        ''' find all unique tags among the specified files
+
+        returns set('python', 'twilio')
+        '''
+        tags = []
+        for filepath in filepaths:
+            with open(filepath, 'r') as f:
+                config = yaml.load(f.read().split('---')[0])
+                tags.extend(config['tags'])
+
+        return set(tags)
 
 

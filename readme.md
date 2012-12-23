@@ -86,7 +86,8 @@ And any custom styles or js for a note or project, the build script pulls those 
 ### Building
 The build script does the following:
 
- 1. gathers all the markdown files and validates their yaml
+ 1. gathers all the markdown files
+ 1. validates each of them
  1. compiles tags
  2. creates indices for all detected tags
  3. sets up the vanilla pages..
