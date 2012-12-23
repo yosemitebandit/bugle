@@ -11,18 +11,18 @@ The organization of `src/`:
 
     - src/
        |- meta/
-       |- pages/
+       |- entries/
        |- templates/
        \- static/
 
 The root and about pages are contained in `meta/`.
 These pages are HTML, not markdown, and are injected into the `base.html` template.
 
-The real content is in `pages/` in the form of markdown files.
-Some of these pages are project write-ups, others are blog entries:
+The real content is in `entries/` in the form of markdown files.
+Some of these files are project write-ups, others are blog entries:
 
     - src/
-       \- pages/
+       \- entries/
            |- trebuchet.md
            |- never.md
            |- ps2keyboard-leonardo-port.md
@@ -66,7 +66,7 @@ Tagged entries can also be gathered up under one roof.
     - src/
        \- templates/
            |- base.html
-           |- page.html
+           |- entry.html
            \- tag.html
 
 And any custom styles or js for a note or project, the build script pulls those in based on the metadata:
