@@ -51,7 +51,7 @@ Each of these markdown files is secretly half `yaml`:
 
     ### oh, memory
 
-    it's a fickle think.
+    it's a fickle thing.
     we should try to make it better..
     with *texts*.
 
