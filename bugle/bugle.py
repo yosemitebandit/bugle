@@ -27,6 +27,8 @@ class Bugle(object):
 
         returns set('/notes/hola.md', 'bike.md')
         '''
+
+        # ..later
         pass
 
     
