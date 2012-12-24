@@ -40,16 +40,14 @@ class Bugle(object):
         return set(filepaths)
 
 
-    def compile_tags(self, filepaths):
-        ''' find all unique tags among the specified files
+    def compile_tags(self, entries):
+        ''' find all unique tags among the specified entries
 
         returns set('python', 'twilio')
         '''
         tags = []
-        for filepath in filepaths:
-            with open(filepath, 'r') as f:
-                config = yaml.load(f.read().split('---')[0])
-                tags.extend(config['tags'])
+        for entry in entries:
+            tags.extend(entry.config['tags'])
 
         return set(tags)
 

@@ -6,7 +6,7 @@
 
 import unittest
 
-from bugle import bugle
+from bugle import bugle, entry
 
 class CompilationTest(unittest.TestCase):
     
@@ -22,5 +22,9 @@ class CompilationTest(unittest.TestCase):
         samples = ['uno.md', 'dos.md', 'tres.md']
         filepaths = ['%s%s' % (self.b.source_path, s) for s in samples]
 
-        tags = self.b.compile_tags(filepaths)
+        entries = []
+        for filepath in filepaths:
+            entries.append(entry.Entry(filepath))
+
+        tags = self.b.compile_tags(entries)
         self.assertEqual(tags, set(['notes', 'projects', 'python', 'twilio']))
