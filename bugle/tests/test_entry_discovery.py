@@ -19,11 +19,10 @@ class DiscoveryTest(unittest.TestCase):
         pass
 
     def test_discover_entries(self):
-        entries = self.b.discover_entries()
+        entries = self.b.discover_entries(self.b.source_path)
 
         samples = ['uno.md', 'dos.md', 'ideas/2012/tres.md']
         expected_entries = set(['%s%s' % (self.b.source_path, s) for s in 
             samples])
 
-        #self.assertEqual(entries, expected_entries)
-        return True
+        self.assertEqual(entries, expected_entries)

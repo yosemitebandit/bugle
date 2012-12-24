@@ -2,6 +2,8 @@
 ''' bugle
 a generator of static sites
 '''
+import os
+
 #from unidecode import unidecode
 import yaml
 
@@ -10,8 +12,8 @@ class Bugle(object):
     ''' finding source files (entries)
     validating these files
     compiles tags
-    creates indices
     generates slugs
+    creates indices for each tag
     injects rendered data into templates
     sets up css and js
     saves the lot in an appropriate folder structure
@@ -22,17 +24,23 @@ class Bugle(object):
         self.out_path = out_path
 
 
-    def discover_entries(self):
+    def discover_entries(self, directory):
         ''' recursively dig into source_path, looking for entries
         this discovery allows authors to organize files however they'd like
 
         returns set('/notes/hola.md', 'bike.md')
         '''
+        filepaths = []
+        for root, subdirectories, filenames in os.walk(directory):
+            for filename in filenames:
+                filepaths.append(os.path.join(root, filename))
 
-        # ..later
-        pass
+            for subdirectory in subdirectories:
+                self.discover_entries(subdirectory)
 
-    
+        return set(filepaths)
+
+
     def validate_entry(self, file_handler):
         ''' checks that an entry is properly formatted
         needs one separator in the file
@@ -96,4 +104,11 @@ class Bugle(object):
 
         # need to use unidecode and pipeline's techniques
         return route.replace(' ', '-')
+
+
+    def verify_unique_paths(self):
+        ''' checks that all tags and all entries are uniquely routed
+        '''
+        tags = compile_tags()
+        # need an Entry class that allows some querying?
 
