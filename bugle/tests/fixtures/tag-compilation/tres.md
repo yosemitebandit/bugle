@@ -1,20 +1,10 @@
 title: never.md
 blurb: an sms time-capsule
-when: September, 2012
-ongoing: true
-where: San Francisco
+created: September, 2012
 tags:
     - python
     - twilio
     - notes
-section: projects
-thumb: http://s3.aws.com/screenshot.png
-route: sms-time-capsule
-css:
-    - css/never.css
-    - css/other.css
-js:
-    - js/jquery.min.js
 ---
 
 ### oh, memory
