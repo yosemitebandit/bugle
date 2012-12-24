@@ -89,9 +89,9 @@ The build script does the following:
  1. gathers all the markdown files
  1. validates each of them
  1. compiles tags
+ 4. generates slugs and checks that they are unique
  2. creates indices for all detected tags
  3. sets up the vanilla pages..
- 4. generates slugs and checks that they are unique
  5. renders markdown
  6. injects resultant html into templates
  7. pulls relevant css and js into templates
