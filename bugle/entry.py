@@ -4,7 +4,6 @@ one of the dynamic entries
 '''
 import re
 
-
 from unidecode import unidecode
 import yaml
 
