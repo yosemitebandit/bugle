@@ -37,6 +37,10 @@ class Entry(object):
             #self.parse_markdown()
 
 
+    def __repr__(self):
+        return 'Entry %s' % self.filepath
+
+
     def validate(self):
         ''' checks that an entry is properly formatted
         needs one separator in the file
