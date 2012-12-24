@@ -42,9 +42,9 @@ class Bugle(object):
         '''
         separator = '---'
         data = file_handler.read().split(separator)
-        # validate the presence of exactly one separator
-        if len(data) != 2:
-            message = ('the separator "%s" needs to appear exactly once' % 
+        # validate the presence of a separator
+        if len(data) < 2:
+            message = ('the separator "%s" needs to appear at least once' %
                     separator)
             return (False, message)
 

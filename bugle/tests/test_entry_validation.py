@@ -30,6 +30,14 @@ class ValidationTest(unittest.TestCase):
             result = self.b.validate_entry(f)
             self.assertEqual(False, result[0])
 
+    def test_multiple_separators(self):
+        # we should only look for the first instance of the separator
+        # so multiple separators should be allowed
+        filepath = '%s/multiple-separators.md' % self.b.source_path
+        with open(filepath, 'r') as f:
+            result = self.b.validate_entry(f)
+            self.assertEqual(True, result[0])
+
     def test_bad_yaml(self):
         filepath = '%s/bad_yaml.md' % self.b.source_path
         with open(filepath, 'r') as f:
