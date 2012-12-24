@@ -1,4 +1,4 @@
-title: sms time capsule
+title: never.md
 blurb: an sms time-capsule
 created: September, 2012
 tags:
@@ -11,3 +11,5 @@ tags:
 it's a fickle thing.
 we should try to make it better..
 with *texts*.
+---
+or maybe emails!

@@ -6,7 +6,7 @@
 
 import unittest
 
-from bugle import bugle
+from bugle import bugle, entry
 
 class ValidationTest(unittest.TestCase):
     
@@ -20,89 +20,76 @@ class ValidationTest(unittest.TestCase):
 
     def test_bad_separator(self):
         filepath = '%s/bad_separator.md' % self.b.source_path
-        with open(filepath, 'r') as f:
-            result = self.b.validate_entry(f)
-            self.assertEqual(False, result[0])
+        e = entry.Entry(filepath)
+        self.assertEqual(False, e.valid)
 
     def test_no_separator(self):
         filepath = '%s/no_separator.md' % self.b.source_path
-        with open(filepath, 'r') as f:
-            result = self.b.validate_entry(f)
-            self.assertEqual(False, result[0])
+        e = entry.Entry(filepath)
+        self.assertEqual(False, e.valid)
 
     def test_multiple_separators(self):
         # we should only look for the first instance of the separator
         # so multiple separators should be allowed
         filepath = '%s/multiple-separators.md' % self.b.source_path
-        with open(filepath, 'r') as f:
-            result = self.b.validate_entry(f)
-            self.assertEqual(True, result[0])
+        e = entry.Entry(filepath)
+        self.assertEqual(True, e.valid)
 
     def test_bad_yaml(self):
         filepath = '%s/bad_yaml.md' % self.b.source_path
-        with open(filepath, 'r') as f:
-            result = self.b.validate_entry(f)
-            self.assertEqual(False, result[0])
+        e = entry.Entry(filepath)
+        self.assertEqual(False, e.valid)
 
 
     ''' valid entries should ..validate
     '''
     def test_valid_entry(self):
         filepath = '%s/uno.md' % self.b.source_path
-        with open(filepath, 'r') as f:
-            result = self.b.validate_entry(f)
-            self.assertEqual(True, result[0])
+        e = entry.Entry(filepath)
+        self.assertEqual(True, e.valid)
 
 
     ''' config files that lack required params
     '''
     def test_missing_title(self):
         filepath = '%s/missing-title.md' % self.b.source_path
-        with open(filepath, 'r') as f:
-            result = self.b.validate_entry(f)
-            self.assertEqual(False, result[0])
+        e = entry.Entry(filepath)
+        self.assertEqual(False, e.valid)
 
     def test_missing_blurb(self):
         filepath = '%s/missing-blurb.md' % self.b.source_path
-        with open(filepath, 'r') as f:
-            result = self.b.validate_entry(f)
-            self.assertEqual(False, result[0])
+        e = entry.Entry(filepath)
+        self.assertEqual(False, e.valid)
 
     def test_missing_tags(self):
         filepath = '%s/missing-tags.md' % self.b.source_path
-        with open(filepath, 'r') as f:
-            result = self.b.validate_entry(f)
-            self.assertEqual(False, result[0])
+        e = entry.Entry(filepath)
+        self.assertEqual(False, e.valid)
 
     def test_missing_creation_time(self):
         filepath = '%s/missing-creation-time.md' % self.b.source_path
-        with open(filepath, 'r') as f:
-            result = self.b.validate_entry(f)
-            self.assertEqual(False, result[0])
+        e = entry.Entry(filepath)
+        self.assertEqual(False, e.valid)
 
 
     ''' config files with empty required params
     '''
     def test_empty_title(self):
         filepath = '%s/empty-title.md' % self.b.source_path
-        with open(filepath, 'r') as f:
-            result = self.b.validate_entry(f)
-            self.assertEqual(False, result[0])
+        e = entry.Entry(filepath)
+        self.assertEqual(False, e.valid)
 
     def test_empty_blurb(self):
         filepath = '%s/empty-blurb.md' % self.b.source_path
-        with open(filepath, 'r') as f:
-            result = self.b.validate_entry(f)
-            self.assertEqual(False, result[0])
+        e = entry.Entry(filepath)
+        self.assertEqual(False, e.valid)
 
     def test_empty_tags(self):
         filepath = '%s/empty-tags.md' % self.b.source_path
-        with open(filepath, 'r') as f:
-            result = self.b.validate_entry(f)
-            self.assertEqual(False, result[0])
+        e = entry.Entry(filepath)
+        self.assertEqual(False, e.valid)
 
     def test_empty_creation_time(self):
         filepath = '%s/empty-creation-time.md' % self.b.source_path
-        with open(filepath, 'r') as f:
-            result = self.b.validate_entry(f)
-            self.assertEqual(False, result[0])
+        e = entry.Entry(filepath)
+        self.assertEqual(False, e.valid)

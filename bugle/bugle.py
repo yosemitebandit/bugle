@@ -2,10 +2,8 @@
 ''' bugle
 a generator of static sites
 '''
-import re
 import os
 
-from unidecode import unidecode
 import yaml
 
 
@@ -42,42 +40,6 @@ class Bugle(object):
         return set(filepaths)
 
 
-    def validate_entry(self, file_handler):
-        ''' checks that an entry is properly formatted
-        needs one separator in the file
-        content before the separator needs to be yaml
-
-        returns (True|False, 'rationale')
-        '''
-        separator = '---'
-        data = file_handler.read().split(separator)
-        # validate the presence of a separator
-        if len(data) < 2:
-            message = ('the separator "%s" needs to appear at least once' %
-                    separator)
-            return (False, message)
-
-        # validate the yaml
-        try:
-            config = yaml.load(data[0])
-        except:
-            message = 'invalid yaml header'
-            return (False, message)
-
-        # validates that all required params are present and not empty
-        required_params = ['title', 'blurb', 'tags', 'created']
-        for param in required_params:
-            if param not in config.keys():
-                message = 'yaml header is missing parameter "%s"' % param
-                return (False, message)
-
-            if not config[param]:
-                message = 'yaml parameter "%s" is invalid' % param
-                return (False, message)
-
-        return (True, 'valid.')
-
-
     def compile_tags(self, filepaths):
         ''' find all unique tags among the specified files
 
@@ -92,29 +54,9 @@ class Bugle(object):
         return set(tags)
 
 
-    def generate_slug(self, file_handler):
-        ''' generate a slug for an entry
-        technique from http://flask.pocoo.org/snippets/5/
-
-        returns 'trebuchet-part-two'
-        '''
-        config = yaml.load(file_handler.read().split('---')[0])
-        if 'route' in config.keys():
-            route = config['route']
-        else:
-            route = config['title']
-
-        punctuation = re.compile(r'[\t !"#$%&\'()*\-/<=>?@\[\\\]^_`{|},.]+')
-        result = []
-        for word in punctuation.split(route.lower()):
-            result.extend(unidecode(word).split())
-
-        return unicode(u'-'.join(result))
-
-
     def verify_unique_paths(self):
         ''' checks that all tags and all entries are uniquely routed
         '''
-        tags = compile_tags()
+        tags = self.compile_tags()
         # need an Entry class that allows some querying?
 
