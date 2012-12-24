@@ -2,9 +2,10 @@
 ''' bugle
 a generator of static sites
 '''
+import re
 import os
 
-#from unidecode import unidecode
+from unidecode import unidecode
 import yaml
 
 
@@ -93,6 +94,7 @@ class Bugle(object):
 
     def generate_slug(self, file_handler):
         ''' generate a slug for an entry
+        technique from http://flask.pocoo.org/snippets/5/
 
         returns 'trebuchet-part-two'
         '''
@@ -102,8 +104,12 @@ class Bugle(object):
         else:
             route = config['title']
 
-        # need to use unidecode and pipeline's techniques
-        return route.replace(' ', '-')
+        punctuation = re.compile(r'[\t !"#$%&\'()*\-/<=>?@\[\\\]^_`{|},.]+')
+        result = []
+        for word in punctuation.split(route.lower()):
+            result.extend(unidecode(word).split())
+
+        return unicode(u'-'.join(result))
 
 
     def verify_unique_paths(self):
