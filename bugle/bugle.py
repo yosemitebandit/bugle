@@ -19,6 +19,7 @@ class Bugle(object):
     def __init__(self, source_path, out_path):
         self.source_path = source_path
         self.entry_path = os.path.join(source_path, 'entries')
+        self.template_path = os.path.join(source_path, 'templates')
         self.out_path = out_path
 
 
