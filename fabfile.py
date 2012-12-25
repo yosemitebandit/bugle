@@ -3,7 +3,7 @@ import shutil
 import sys
 
 from fabric.api import local, env, abort
-from jinja2 import Template
+from jinja2 import Template, Environment, FileSystemLoader
 import markdown
 import yaml
 
@@ -42,9 +42,26 @@ def build():
 
     tags = b.compile_tags(entries)
 
-    print tags
+    # slugs from tags and slugs from entries should all be unique together
+    if not b.verify_unique_routes(entries):
+        print 'paths not unique'
+        sys.exit()
+
+    # renders entry templates
+    for e in entries:
+        outdir = os.path.join(b.out_path, e.slug)
+
+        # create a jinja env
+        env = Environment(loader=FileSystemLoader(b.template_path))
+        template = env.get_template('entry.html')
+        #template = Template(open(os.path.join(b.template_path, 'entry.html')
+        #    , 'r').read())
+
+        html = template.render(entry=e)
+        print html
 
 
+    # renders tag templates
 
     '''
     # generate the css and js

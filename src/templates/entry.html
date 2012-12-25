@@ -2,6 +2,9 @@
 
 {% block content %}
 
-{{ page_data }}
+<h4>{{ entry.title }}</h4>
+<p>{{ entry.created }}</p>
+
+{{ entry.rendered_markdown }}
 
 {% endblock %}
