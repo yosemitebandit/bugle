@@ -1,3 +1,4 @@
+import errno
 import os
 import sys
 
@@ -44,21 +45,23 @@ def build():
         print 'paths not unique'
         sys.exit()
 
-    # renders entry templates
+
+    # render entry templates
     for e in entries:
         outdir = os.path.join(b.out_path, e.slug)
+        _ensure_path_exists(outdir)
 
         # create a jinja env
         env = Environment(loader=FileSystemLoader(b.template_path))
         template = env.get_template('entry.html')
-        #template = Template(open(os.path.join(b.template_path, 'entry.html')
-        #    , 'r').read())
 
-        html = template.render(entry=e)
-        print html
+        html = template.render(entry=e, tags=tags)
+
+        with open(os.path.join(outdir, 'index.html'), 'w') as f:
+            f.write(html)
 
 
-    # renders tag templates
+    # render tag templates
 
     '''
     # generate the css and js
@@ -71,14 +74,6 @@ def build():
         for js_file in meta['js']:
             js += '<script src="../js/%s">' % js_file
 
-    # inject all this into the template
-    template_files = 'src/templates'
-    template = Template(open(os.path.join(template_files, meta['template']), 'r').read())
-    out = template.render(title=meta['title'], date=meta['date'], content=md_content, css=css, js=js)
-
-    # write the data
-    with open(path, 'w') as f:
-        f.write(out)
     '''
 
     '''
@@ -94,3 +89,12 @@ def build():
             for filename in filenames:
                 shutil.copy(os.path.join(src_path, filename), build_path)
     '''
+
+def _ensure_path_exists(path):
+    # from http://stackoverflow.com/a/5032238/232638
+    try:
+        os.makedirs(path)
+    except OSError as exception:
+        if exception.errno != errno.EEXIST:
+            raise
+
