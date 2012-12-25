@@ -4,6 +4,7 @@ one of the dynamic entries
 '''
 import re
 
+import markdown
 from unidecode import unidecode
 import yaml
 
@@ -33,8 +34,6 @@ class Entry(object):
             self.parse()
             # save a slug based on title or route param
             self.generate_slug()
-            # process the markdown
-            #self.parse_markdown()
 
 
     def __repr__(self):
@@ -101,6 +100,7 @@ class Entry(object):
         self.config = yaml.load(data.pop(0))
         # in case the separator was in the markdown, use it in the rejoin
         self.markdown = self.separator.join(data)
+        self.rendered_markdown = markdown.markdown(self.markdown)
 
 
     def generate_slug(self):

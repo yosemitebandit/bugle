@@ -45,3 +45,8 @@ class ParsingTest(unittest.TestCase):
             "---\n"
             "or maybe emails!\n")
         self.assertEqual(expected_markdown, e.markdown)
+
+    def test_markdown_rendering(self):
+        filepath = '%s/vanilla.md' % self.b.entry_path
+        e = entry.Entry(filepath)
+        self.assertIn('<h3>', e.rendered_markdown)
