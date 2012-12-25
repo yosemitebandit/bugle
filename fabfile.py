@@ -12,23 +12,26 @@ def prod():
     env.host = 'kepler'
     env.dir = '/home/matt/yosemitebandit.com/bugle'
     env.root = 'yosemitebandit.com'
+    env.source_path = 'src/'
+    env.out_path = 'out/'
 
 def dev():
     env.user = 'matt'
     env.host = 'kepler'
     env.dir = '/home/matt/yosemitebandit.com/public/test'
     env.root = '127.0.0.1:8000'
+    env.source_path = 'src/'
+    env.out_path = 'out/'
 
 def deploy():
-    local('rsync -avz --del build/ %s@%s:%s' % (env.user, env.host, env.dir))
+    pass
+    #local('rsync -avz --del build/ %s@%s:%s' % (env.user, env.host, env.dir))
 
 def serve():
     local('python -m SimpleHTTPServer')
 
 def build():
-    source_path = 'src/'
-    out_path = 'out/'
-    b = bugle.Bugle(source_path, out_path)
+    b = bugle.Bugle(env.source_path, env.out_path)
 
     entry_filepaths = b.discover_entries(b.entry_path)
     entries = [entry.Entry(f) for f in entry_filepaths]
@@ -52,8 +55,8 @@ def build():
         _ensure_path_exists(outdir)
 
         # create a jinja env
-        env = Environment(loader=FileSystemLoader(b.template_path))
-        template = env.get_template('entry.html')
+        environ = Environment(loader=FileSystemLoader(b.template_path))
+        template = environ.get_template('entry.html')
 
         html = template.render(entry=e, tags=tags)
 
