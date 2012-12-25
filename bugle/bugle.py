@@ -4,8 +4,6 @@ a generator of static sites
 '''
 import os
 
-import yaml
-
 
 class Bugle(object):
     ''' finding source files (entries)
