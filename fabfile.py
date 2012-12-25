@@ -1,10 +1,13 @@
 import os
 import shutil
+import sys
 
 from fabric.api import local, env, abort
 from jinja2 import Template
 import markdown
 import yaml
+
+from bugle import bugle, entry
 
 def prod():
     env.user = 'matt'
@@ -25,56 +28,46 @@ def serve():
     local('python -m SimpleHTTPServer')
 
 def build():
-    base = 'src/pages'
-    for root, sub_folders, filenames in os.walk(base):
-        for filename in filenames:
-            with open(os.path.join(root, filename), 'r') as f:
-                content = f.read()
-            # pull out the yaml-formatted metadata at the top
-            meta = yaml.safe_load(content.split('---')[0])
+    source_path = 'src/'
+    out_path = 'out/'
+    b = bugle.Bugle(source_path, out_path)
 
-            # extract the actual content (in markdown)
-            # rejoin as a precaution against other instances of "---"
-            content = content.split('---')
-            content.pop(0)
-            md_content = '---'.join(content)
+    entry_filepaths = b.discover_entries(b.entry_path)
+    entries = [entry.Entry(f) for f in entry_filepaths]
+    for e in entries:
+        if not e.valid:
+            print 'validation failed for %s with message %s.' % (e
+                    , e.validation_message)
+            sys.exit()
 
-            if not meta:
-                abort("file %s has no metadata" % filename)
+    tags = b.compile_tags(entries)
 
-            # create the folder for this page
-            if ' ' in meta['route']:
-                abort("route for %s has a space -- let's try to avoid that" % filename)
+    print tags
 
-            if meta['route'] == '/':
-                path = os.path.join('build', 'index.html')
-            else:
-                if not os.path.exists(os.path.join('build', meta['route'])):
-                    os.makedirs(os.path.join('build', meta['route']))
-                path = os.path.join('build', meta['route'], 'index.html')
 
-            # generate the css and js
-            css = ''
-            if 'css' in meta.keys():
-                for css_file in meta['css']:
-                    css += '<link rel="stylesheet" href="../css/%s">' % css_file
-            js = ''
-            if 'js' in meta.keys():
-                for js_file in meta['js']:
-                    js += '<script src="../js/%s">' % js_file
 
-            # render the markdown content
-            md_content = markdown.markdown(md_content)
+    '''
+    # generate the css and js
+    css = ''
+    if 'css' in meta.keys():
+        for css_file in meta['css']:
+            css += '<link rel="stylesheet" href="../css/%s">' % css_file
+    js = ''
+    if 'js' in meta.keys():
+        for js_file in meta['js']:
+            js += '<script src="../js/%s">' % js_file
 
-            # inject all this into the template
-            template_files = 'src/templates'
-            template = Template(open(os.path.join(template_files, meta['template']), 'r').read())
-            out = template.render(title=meta['title'], date=meta['date'], content=md_content, css=css, js=js)
+    # inject all this into the template
+    template_files = 'src/templates'
+    template = Template(open(os.path.join(template_files, meta['template']), 'r').read())
+    out = template.render(title=meta['title'], date=meta['date'], content=md_content, css=css, js=js)
 
-            # write the data
-            with open(path, 'w') as f:
-                f.write(out)
+    # write the data
+    with open(path, 'w') as f:
+        f.write(out)
+    '''
 
+    '''
     # copy over the css and js
     # maybe minify and concatenate one day
     for filetype in ['css', 'js']:
@@ -86,3 +79,4 @@ def build():
         for root, sub_folders, filenames in os.walk(src_path):
             for filename in filenames:
                 shutil.copy(os.path.join(src_path, filename), build_path)
+    '''
