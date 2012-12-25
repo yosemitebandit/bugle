@@ -1,11 +1,8 @@
 import os
-import shutil
 import sys
 
-from fabric.api import local, env, abort
-from jinja2 import Template, Environment, FileSystemLoader
-import markdown
-import yaml
+from fabric.api import local, env
+from jinja2 import Environment, FileSystemLoader
 
 from bugle import bugle, entry
 
