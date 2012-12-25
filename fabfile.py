@@ -30,6 +30,18 @@ def deploy():
 def serve():
     local('python -m SimpleHTTPServer')
 
+
+def clean():
+    ''' removes the output directory and its contents after a confirmation
+    '''
+    r = raw_input('\nconfirm removal of "%s" and all of its contents (y/n) ' % 
+            env.out_path)
+    if r in ['y', 'yes']:
+        local('rm -rf %s' % env.out_path)
+    else:
+        print 'canceled.'
+
+
 def build():
     b = bugle.Bugle(env.source_path, env.out_path)
 
