@@ -1,5 +1,8 @@
 title: treb
-date: 24-Nov-2011
+created: 24-Nov-2011
+blurb: tossing various things
+tags:
+    - projects
 
 route: trebuchet-dos
 

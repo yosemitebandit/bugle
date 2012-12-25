@@ -1,7 +1,9 @@
 title: robo
-date: 2012 November 23
+created: 2012 November 23
+blurb: makin a robot
 tags:
     - arduino
+    - projects
 
 route: robotastic
 

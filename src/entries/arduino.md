@@ -1,11 +1,10 @@
 title: Arduino learnin
-date: 2012 November 23
+created: 2012 November 23
+blurb: some initial experimentation with the arduino
 tags:
     - arduino
+    - projects
 
-route: arduino-learnin
-
-template: main.html
 css:
     - bootstrap.min.css
     - project.css
