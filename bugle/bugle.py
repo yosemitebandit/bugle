@@ -51,9 +51,21 @@ class Bugle(object):
         return set(tags)
 
 
-    def verify_unique_paths(self):
+    def verify_unique_routes(self, entries):
         ''' checks that all tags and all entries are uniquely routed
         '''
-        tags = self.compile_tags()
-        # need an Entry class that allows some querying?
+        tags = self.compile_tags(entries)
+        tag_slugs = [tag.replace(' ', '-') for tag in tags]
+
+        entry_slugs = [e.slug for e in entries]
+
+        all_slugs = []
+        all_slugs.extend(tag_slugs)
+        all_slugs.extend(entry_slugs)
+
+        # creating a set will eliminate duplicates
+        if len(all_slugs) != len(set(all_slugs)):
+            return False
+        else:
+            return True
 
