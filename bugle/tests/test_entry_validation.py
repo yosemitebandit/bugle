@@ -95,9 +95,23 @@ class ValidationTest(unittest.TestCase):
         self.assertEqual(False, e.valid)
 
 
-    ''' tags must be letters and dashes only
+    ''' tags must be letters, numbers and dashes only
     no spaces or punctuation
     '''
-    def test_tag_validity(self):
-        pass
+    def test_tag_with_punctuation(self):
+        filepath = '%s/tags-with-punctuation.md' % self.b.entry_path
+        e = entry.Entry(filepath)
+        self.assertEqual(False, e.valid)
+
+    def test_tag_with_space(self):
+        filepath = '%s/tags-with-space.md' % self.b.entry_path
+        e = entry.Entry(filepath)
+        expected_tags = ['python and stuff', 'twilio']
+        self.assertTrue(e.valid and e.config['tags'] == expected_tags)
+
+    def test_tag_with_dash(self):
+        filepath = '%s/tags-with-dash.md' % self.b.entry_path
+        e = entry.Entry(filepath)
+        expected_tags = ['python-sorta', 'twilio']
+        self.assertTrue(e.valid and e.config['tags'] == expected_tags)
 

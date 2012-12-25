@@ -79,6 +79,14 @@ class Entry(object):
                 self.valid = False
                 return False
 
+        # validates the config tags - letters, numbers and dashes only
+        punctuation = re.compile(r'[\t!"#$%&\'()*\/<=>?@\[\\\]^_`{|},.]+')
+        for tag in config['tags']:
+            if len(punctuation.split(tag)) > 1:
+                self.validation_message = 'tag %s is invalid' % tag
+                self.valid = False
+                return False
+
         self.validation_message = 'valid.'
         self.valid = True
         return True
