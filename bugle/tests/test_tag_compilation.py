@@ -4,6 +4,7 @@
 ''' testing the compilation of tags from several files
 '''
 
+import os
 import unittest
 
 from bugle import bugle, entry
@@ -20,7 +21,7 @@ class CompilationTest(unittest.TestCase):
 
     def test_discover_tags(self):
         samples = ['uno.md', 'dos.md', 'tres.md']
-        filepaths = ['%s%s' % (self.b.source_path, s) for s in samples]
+        filepaths = [os.path.join(self.b.entry_path, s) for s in samples]
 
         entries = []
         for filepath in filepaths:

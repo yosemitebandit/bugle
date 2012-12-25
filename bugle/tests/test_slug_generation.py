@@ -19,26 +19,26 @@ class SlugGenerationTest(unittest.TestCase):
         pass
 
     def test_basic_slug(self):
-        filepath = self.b.source_path + 'basic.md'
+        filepath = self.b.entry_path + '/basic.md'
         e = entry.Entry(filepath)
         self.assertEqual(e.slug, 'sms-time-capsule')
 
     def test_slug_with_punctuation(self):
-        filepath = self.b.source_path + 'punctuation.md'
+        filepath = self.b.entry_path + '/punctuation.md'
         e = entry.Entry(filepath)
         self.assertEqual(e.slug, 'never-an-sms-time-capsule')
 
     def test_slug_override(self):
-        filepath = self.b.source_path + 'override.md'
+        filepath = self.b.entry_path + '/override.md'
         e = entry.Entry(filepath)
         self.assertEqual(e.slug, 'never-the-sms-time-capsule')
 
     def test_slug_with_maths(self):
-        filepath = self.b.source_path + 'maths.md'
+        filepath = self.b.entry_path + '/maths.md'
         e = entry.Entry(filepath)
         self.assertEqual(e.slug, 'lambda-is-difficult')
 
     def test_slug_with_khmer(self):
-        filepath = self.b.source_path + 'khmer.md'
+        filepath = self.b.entry_path + '/khmer.md'
         e = entry.Entry(filepath)
         self.assertEqual(e.slug, 'khemrbhaasaa')

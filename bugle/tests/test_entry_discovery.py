@@ -4,6 +4,7 @@
 ''' testing the discovery of entry on the source path
 '''
 
+import os
 import unittest
 
 from bugle import bugle
@@ -19,10 +20,10 @@ class DiscoveryTest(unittest.TestCase):
         pass
 
     def test_discover_entries(self):
-        entries = self.b.discover_entries(self.b.source_path)
+        entries = self.b.discover_entries(self.b.entry_path)
 
         samples = ['uno.md', 'dos.md', 'ideas/2012/tres.md']
-        expected_entries = set(['%s%s' % (self.b.source_path, s) for s in 
+        expected_entries = set([os.path.join(self.b.entry_path, s) for s in 
             samples])
 
         self.assertEqual(entries, expected_entries)

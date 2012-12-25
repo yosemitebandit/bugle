@@ -18,11 +18,12 @@ class Bugle(object):
 
     def __init__(self, source_path, out_path):
         self.source_path = source_path
+        self.entry_path = os.path.join(source_path, 'entries')
         self.out_path = out_path
 
 
     def discover_entries(self, directory):
-        ''' recursively dig into source_path, looking for entries
+        ''' recursively dig into a path, looking for entries
         this discovery allows authors to organize files however they'd like
 
         returns set('/notes/hola.md', 'bike.md')

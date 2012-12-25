@@ -21,12 +21,12 @@ class ParsingTest(unittest.TestCase):
     
     def test_vanilla_entry_yaml(self):
         # confirm that yaml has been captured and is a dict
-        filepath = '%s/vanilla.md' % self.b.source_path
+        filepath = '%s/vanilla.md' % self.b.entry_path
         e = entry.Entry(filepath)
         self.assertEqual(type(e.config), type({}))
 
     def test_vanilla_entry_markdown(self):
-        filepath = '%s/vanilla.md' % self.b.source_path
+        filepath = '%s/vanilla.md' % self.b.entry_path
         e = entry.Entry(filepath)
         expected_markdown = ("\n\n### oh, memory\n\n"
             "it's a fickle thing.\n"
@@ -36,7 +36,7 @@ class ParsingTest(unittest.TestCase):
 
     def test_multiple_separators(self):
         # separators ('---') in the markdown should be allowed
-        filepath = '%s/multiple-separators.md' % self.b.source_path
+        filepath = '%s/multiple-separators.md' % self.b.entry_path
         e = entry.Entry(filepath)
         expected_markdown = ("\n\n### oh, memory\n\n"
             "it's a fickle thing.\n"
