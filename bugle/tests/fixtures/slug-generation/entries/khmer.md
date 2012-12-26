@@ -1,5 +1,5 @@
 title: ខេមរភាសា
-created: Septembe, 2012
+created: September, 2012
 blurb: an sms time-capsule
 tags:
     - python
