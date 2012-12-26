@@ -2,9 +2,18 @@
 
 {% block content %}
 
-<h4>{{ entry.config.title }}</h4>
-<p>{{ entry.config.created }}</p>
+<div class='row'>
+    <div class='offset1 span3'>
+        {% for tag in tags %}
+            <p>{{ tag }}</p>
+        {% endfor %}
+    </div>
 
-{{ entry.rendered_markdown }}
+    <div class='span8'>
+        <h4>{{ entry.config.title }}</h4>
+        <p>{{ entry.config.created }}</p>
+
+        {{ entry.rendered_markdown }}
+    </div>
 
 {% endblock %}
