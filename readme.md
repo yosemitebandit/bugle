@@ -59,6 +59,7 @@ Each of these markdown files is secretly half `yaml`:
 So that's `---` as a separator between the metadata and the content.
 The value of `thumb` is shown in the indices.
 Set a custom URL with the optional `route` parameter.
+The date-type parameters, `created` and `updated`, must be of the form `September, 2012`, `September 10, 2012`.
 
 Basic templates, those are where you'd expect.
 Tagged entries can also be gathered up under one roof.

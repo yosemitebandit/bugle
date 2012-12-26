@@ -115,3 +115,16 @@ class ValidationTest(unittest.TestCase):
         expected_tags = ['python-sorta', 'twilio']
         self.assertTrue(e.valid and e.config['tags'] == expected_tags)
 
+
+    ''' the "created" and "updated" params must be formatted properly
+    '''
+    def test_improper_creation_time_formatting(self):
+        filepath = ('%s/improper-creation-time-formatting.md' %
+                self.b.entry_path)
+        e = entry.Entry(filepath)
+        self.assertFalse(e.valid)
+
+    def test_improper_update_time_formatting(self):
+        filepath = '%s/improper-update-time-formatting.md' % self.b.entry_path
+        e = entry.Entry(filepath)
+        self.assertFalse(e.valid)
