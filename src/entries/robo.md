@@ -1,5 +1,5 @@
 title: robo
-created: 2012 November 23
+created: November 23, 2012
 blurb: makin a robot
 tags:
     - arduino

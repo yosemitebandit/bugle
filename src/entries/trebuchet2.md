@@ -1,5 +1,5 @@
 title: treb
-created: 24-Nov-2011
+created: November 24, 2011
 blurb: tossing various things
 tags:
     - projects
