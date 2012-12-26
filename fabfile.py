@@ -98,35 +98,6 @@ def build():
             f.write(html)
 
 
-    # render tag templates
-
-    '''
-    # generate the css and js
-    css = ''
-    if 'css' in meta.keys():
-        for css_file in meta['css']:
-            css += '<link rel="stylesheet" href="../css/%s">' % css_file
-    js = ''
-    if 'js' in meta.keys():
-        for js_file in meta['js']:
-            js += '<script src="../js/%s">' % js_file
-
-    '''
-
-    '''
-    # copy over the css and js
-    # maybe minify and concatenate one day
-    for filetype in ['css', 'js']:
-        build_path = os.path.join('build', filetype)
-        if not os.path.exists(build_path):
-            os.makedirs(build_path)
-
-        src_path = os.path.join('src', filetype)
-        for root, sub_folders, filenames in os.walk(src_path):
-            for filename in filenames:
-                shutil.copy(os.path.join(src_path, filename), build_path)
-    '''
-
 def _ensure_path_exists(path):
     # from http://stackoverflow.com/a/5032238/232638
     try:
