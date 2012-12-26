@@ -44,6 +44,7 @@ def clean():
 
 def build():
     b = bugle.Bugle(env.source_path, env.out_path)
+    _ensure_path_exists(b.out_path)
 
     entry_filepaths = b.discover_entries(b.entry_path)
     entries = [entry.Entry(f) for f in entry_filepaths]
@@ -60,11 +61,18 @@ def build():
         print 'paths not unique'
         sys.exit()
 
+    
+    # copy over the css
+    css_files = os.path.join(b.css_path, '*.css')
+    css_out_path = os.path.join(b.out_path, 'css')
+    _ensure_path_exists(css_out_path)
+    local('cp -L %s %s' % (css_files, css_out_path))
+
 
     # render entry templates
     for e in entries:
-        outdir = os.path.join(b.out_path, e.slug)
-        _ensure_path_exists(outdir)
+        out_dir = os.path.join(b.out_path, e.slug)
+        _ensure_path_exists(out_dir)
 
         # create a jinja env
         environ = Environment(loader=FileSystemLoader(b.template_path))
@@ -72,7 +80,7 @@ def build():
 
         html = template.render(entry=e, tags=tags)
 
-        with open(os.path.join(outdir, 'index.html'), 'w') as f:
+        with open(os.path.join(out_dir, 'index.html'), 'w') as f:
             f.write(html)
 
 
