@@ -1,5 +1,7 @@
 import errno
 import os
+import SimpleHTTPServer
+import SocketServer
 import sys
 
 from fabric.api import local, env
@@ -28,7 +30,19 @@ def deploy():
     #local('rsync -avz --del build/ %s@%s:%s' % (env.user, env.host, env.dir))
 
 def serve():
-    local('python -m SimpleHTTPServer')
+    ''' from http://stackoverflow.com/a/10614360/232638
+    address reuse makes it superior to "local('python -m SimpleHTTPServer')"
+    '''
+    Handler = SimpleHTTPServer.SimpleHTTPRequestHandler
+    class MyTCPServer(SocketServer.TCPServer):
+        allow_reuse_address = True
+
+    port = 8080
+    server = MyTCPServer(('0.0.0.0', port), Handler)
+    print '\nserving on localhost:%s\n' % port
+
+    os.chdir(env.out_path)
+    server.serve_forever()
 
 
 def clean():
