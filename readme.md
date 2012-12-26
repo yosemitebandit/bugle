@@ -103,6 +103,12 @@ Generate the html pages with fabric
     (venv)$ fab build
 
 
+### Run the dev server
+
+    $ ./path/to/venv/bin/activate
+    (venv)$ fab dev serve
+
+
 ### Deploying
 Maybe `rsync` or S3.
 
