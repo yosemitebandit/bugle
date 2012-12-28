@@ -17,6 +17,12 @@
         <p>{{ entry.config.created }}</p>
 
         {{ entry.rendered_markdown }}
+
+        <i class='pull-right'>tags:
+            {% for tag in entry.config.tags %}
+                <a href="../{{ tag.replace(' ', '-') }}">{{ tag }}</a>
+            {% endfor %}
+        </i>
     </div>
 
 {% endblock %}
