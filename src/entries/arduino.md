@@ -4,6 +4,7 @@ blurb: some initial experimentation with the arduino
 tags:
     - arduino
     - projects
+    - great fun
 
 css:
     - bootstrap.min.css
