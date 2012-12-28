@@ -97,6 +97,26 @@ def build():
         with open(os.path.join(out_dir, 'index.html'), 'w') as f:
             f.write(html)
 
+    # render tag templates
+    for tag in tags:
+        tagged_entries = []
+        for e in entries:
+            if tag in e.config['tags']:
+                tagged_entries.append(e)
+
+        # create a jinja env
+        environ = Environment(loader=FileSystemLoader(b.template_path))
+        template = environ.get_template('tag.html')
+
+        html = template.render(tags=tags, tag=tag, entries=tagged_entries)
+
+        tag_slug = tag.replace(' ', '-')
+        out_dir = os.path.join(b.out_path, tag_slug)
+        _ensure_path_exists(out_dir)
+
+        with open(os.path.join(out_dir, 'index.html'), 'w') as f:
+            f.write(html)
+
 
 def _ensure_path_exists(path):
     # from http://stackoverflow.com/a/5032238/232638

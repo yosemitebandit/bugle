@@ -2,6 +2,24 @@
 
 {% block content %}
 
-{{ tags }}
+<div class='row'>
+    <div class='tags-container offset1 span3'>
+        {% for tag in tags %}
+            <p>{{ tag }}</p>
+        {% endfor %}
+    </div>
+
+    <div class='span8'>
+
+        <h2>{{ tag }}</h2>
+
+        {% for entry in entries %}
+        <div class='well'>
+            <h4> {{ entry.config.title }}</h4>
+            <p>{{ entry.config.blurb }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 
 {% endblock %}
