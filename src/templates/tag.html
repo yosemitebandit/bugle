@@ -5,7 +5,10 @@
 <div class='row'>
     <div class='tags-container offset1 span3'>
         {% for tag in tags %}
-            <p>{{ tag }}</p>
+            {% set tag_slug = tag.replace(' ', '-') %}
+            <p>
+                <a href='../{{ tag_slug }}'>{{ tag }}</a>
+            </p>
         {% endfor %}
     </div>
 
@@ -14,10 +17,12 @@
         <h2>{{ tag }}</h2>
 
         {% for entry in entries %}
-        <div class='well'>
-            <h4> {{ entry.config.title }}</h4>
-            <p>{{ entry.config.blurb }}</p>
-        </div>
+        <a href='../{{ entry.slug }}'>
+            <div class='well'>
+                <h4> {{ entry.config.title }}</h4>
+                <p>{{ entry.config.blurb }}</p>
+            </div>
+        </a>
         {% endfor %}
     </div>
 </div>

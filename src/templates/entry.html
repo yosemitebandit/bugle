@@ -5,7 +5,10 @@
 <div class='row'>
     <div class='tags-container offset1 span3'>
         {% for tag in tags %}
-            <p>{{ tag }}</p>
+            {% set tag_slug = tag.replace(' ', '-') %}
+            <p>
+                <a href='../{{ tag_slug }}'>{{ tag }}</a>
+            </p>
         {% endfor %}
     </div>
 
