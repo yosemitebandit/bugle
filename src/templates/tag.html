@@ -16,8 +16,9 @@
     {% for t in tags %}
         {% if t['name'] == tag %}
             <h6>
-                <span class='indicator'>>
-                {{ t['name']|upper }} ({{ t['count'] }})
+                <span class='indicator'>
+                    <span class='arrow'>&raquo;</span>
+                    {{ t['name']|upper }} ({{ t['count'] }})
                 </span>
             </h6>
         {% else %}
