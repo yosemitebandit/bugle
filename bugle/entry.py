@@ -11,14 +11,9 @@ import yaml
 
 
 class Entry(object):
-    ''' stores
-    validating these files
-    compiles tags
-    generates slugs
-    creates indices for each tag
-    injects rendered data into templates
-    sets up css and js
-    saves the lot in an appropriate folder structure
+    ''' stores file data
+    validates
+    generates a slug
     '''
 
     def __init__(self, filepath):
