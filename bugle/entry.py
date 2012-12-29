@@ -3,7 +3,7 @@
 one of the dynamic entries
 '''
 import re
-import time
+from datetime import datetime
 
 import markdown
 from unidecode import unidecode
@@ -90,13 +90,13 @@ class Entry(object):
 
         # validates the formatting of "created" and "updated"
         # should be of the form "September, 2012" or "September 12, 2012"
-        if not self._validate_date(config['created']):
+        if not self._convert_to_datetime(config['created']):
             self.validation_message = 'invalid formatting on "created" param.'
             self.valid = False
             return False
 
         if ('updated' in config.keys()
-                and not self._validate_date(config['updated'])):
+                and not self._convert_to_datetime(config['updated'])):
             self.validation_message = 'invalid formatting on "updated" param.'
             self.valid = False
             return False
@@ -138,19 +138,19 @@ class Entry(object):
         self.slug = unicode(u'-'.join(result))
 
 
-    def _validate_date(self, param):
+    def _convert_to_datetime(self, param):
         ''' validates formatting of time params in the config
         should be 'September 19, 2012' or 'September, 2012'
         '''
         try:
-            time.strptime(param, '%B %d, %Y')
-            return True
+            dt = datetime.strptime(param, '%B %d, %Y')
+            return dt
         except ValueError:
             pass
 
         try:
-            time.strptime(param, '%B, %Y')
-            return True
+            dt = datetime.strptime(param, '%B, %Y')
+            return dt
         except ValueError:
             pass
 
