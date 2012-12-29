@@ -89,14 +89,15 @@ def build():
         out_dir = os.path.join(b.out_path, e.slug)
         _ensure_path_exists(out_dir)
 
-        # create a jinja env
+        # create a jinja env and render the template
         environ = Environment(loader=FileSystemLoader(b.template_path))
         template = environ.get_template('entry.html')
-
         html = template.render(entry=e, tags=tags)
 
+        # write the page
         with open(os.path.join(out_dir, 'index.html'), 'w') as f:
             f.write(html)
+
 
     # render tag templates
     for tag in tags:
@@ -105,28 +106,20 @@ def build():
             if tag['name'] in e.config['tags']:
                 tagged_entries.append(e)
 
-
         # sort the entries by date
-        # first convert dates to a datetime
-        for e in tagged_entries:
-            if 'updated' in e.config.keys():
-                e.config['dt'] = e._convert_to_datetime(e.config['updated'])
-            else:
-                e.config['dt'] = e._convert_to_datetime(e.config['created'])
+        tagged_entries.sort(key=lambda e: e.config['last_update']
+                , reverse=True)
 
-        tagged_entries.sort(key=lambda e: e.config['dt'], reverse=True)
-
-
-        # create a jinja env
+        # create a jinja env and render the template
         environ = Environment(loader=FileSystemLoader(b.template_path))
         template = environ.get_template('tag.html')
+        html = template.render(tags=tags, tag=tag['name']
+                , entries=tagged_entries)
 
-        html = template.render(tags=tags, tag=tag['name'], entries=tagged_entries)
-
+        # write the page
         tag_slug = tag['name'].replace(' ', '-')
         out_dir = os.path.join(b.out_path, tag_slug)
         _ensure_path_exists(out_dir)
-
         with open(os.path.join(out_dir, 'index.html'), 'w') as f:
             f.write(html)
 

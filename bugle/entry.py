@@ -109,6 +109,7 @@ class Entry(object):
 
     def parse(self):
         ''' saves config and markdown
+        creates a 'last_updated' param based on 'created' and 'updated'
 
         returns None
         '''
@@ -117,6 +118,14 @@ class Entry(object):
         # in case the separator was in the markdown, use it in the rejoin
         self.markdown = self.separator.join(data)
         self.rendered_markdown = markdown.markdown(self.markdown)
+
+        # create a 'last_updated' param to be used for sorting
+        if 'updated' in self.config.keys():
+            self.config['last_update'] = self._convert_to_datetime(
+                    self.config['updated'])
+        else:
+            self.config['last_update'] = self._convert_to_datetime(
+                    self.config['created'])
 
 
     def generate_slug(self):
