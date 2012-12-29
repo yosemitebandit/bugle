@@ -69,6 +69,15 @@ def build():
             sys.exit()
 
     tags = b.compile_tags(entries)
+    counted_tags = []
+    for tag in tags:
+        count = 0
+        for e in entries:
+            if tag in e.config['tags']:
+                count += 1
+
+        counted_tags.append((tag, count))
+            
 
     # slugs from tags and slugs from entries should all be unique together
     if not b.verify_unique_routes(entries):
@@ -92,7 +101,7 @@ def build():
         environ = Environment(loader=FileSystemLoader(b.template_path))
         template = environ.get_template('entry.html')
 
-        html = template.render(entry=e, tags=tags)
+        html = template.render(entry=e, tags=tags, counted_tags=counted_tags)
 
         with open(os.path.join(out_dir, 'index.html'), 'w') as f:
             f.write(html)
@@ -120,7 +129,7 @@ def build():
         environ = Environment(loader=FileSystemLoader(b.template_path))
         template = environ.get_template('tag.html')
 
-        html = template.render(tags=tags, tag=tag, entries=tagged_entries)
+        html = template.render(tags=tags, tag=tag, entries=tagged_entries, counted_tags=counted_tags)
 
         tag_slug = tag.replace(' ', '-')
         out_dir = os.path.join(b.out_path, tag_slug)

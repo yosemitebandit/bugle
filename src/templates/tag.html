@@ -12,10 +12,10 @@
 
 {% block content %}
 
-<div class='tags-sidebar offset1 span3'>
-    {% for tag in tags %}
-    <a href="../{{ tag.replace(' ', '-') }}">
-        <h6>{{ tag|upper }}</h6>
+<div class='tags-container offset1 span3'>
+    {% for tag in counted_tags %}
+    <a href="../{{ tag[0].replace(' ', '-') }}">
+        <h6>{{ tag[0]|upper }} ({{ tag[1] }})</h6>
     </a>
     {% endfor %}
 </div>
