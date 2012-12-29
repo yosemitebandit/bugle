@@ -19,8 +19,8 @@ class DiscoveryTest(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_discover_entries(self):
-        entries = self.b.discover_entries(self.b.entry_path)
+    def test_discover_files(self):
+        entries = self.b.discover_files(self.b.entry_path)
 
         samples = ['uno.md', 'dos.md', 'ideas/2012/tres.md']
         expected_entries = set([os.path.join(self.b.entry_path, s) for s in 

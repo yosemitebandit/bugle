@@ -21,7 +21,7 @@ class UniqueRoutesTest(unittest.TestCase):
         out_path = ''
         self.b = bugle.Bugle(source_path, out_path)
 
-        entry_filepaths = self.b.discover_entries(self.b.entry_path)
+        entry_filepaths = self.b.discover_files(self.b.entry_path)
         entries = [entry.Entry(f) for f in entry_filepaths]
 
         self.assertFalse(self.b.verify_unique_routes(entries))
@@ -31,7 +31,7 @@ class UniqueRoutesTest(unittest.TestCase):
         out_path = ''
         self.b = bugle.Bugle(source_path, out_path)
 
-        entry_filepaths = self.b.discover_entries(self.b.entry_path)
+        entry_filepaths = self.b.discover_files(self.b.entry_path)
         entries = [entry.Entry(f) for f in entry_filepaths]
 
         self.assertTrue(self.b.verify_unique_routes(entries))

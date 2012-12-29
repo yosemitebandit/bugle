@@ -24,7 +24,7 @@ class Bugle(object):
         self.out_path = out_path
 
 
-    def discover_entries(self, directory):
+    def discover_files(self, directory):
         ''' recursively dig into a path, looking for entries
         this discovery allows authors to organize files however they'd like
 
@@ -36,7 +36,7 @@ class Bugle(object):
                 filepaths.append(os.path.join(root, filename))
 
             for subdirectory in subdirectories:
-                self.discover_entries(subdirectory)
+                self.discover_files(subdirectory)
 
         return set(filepaths)
 

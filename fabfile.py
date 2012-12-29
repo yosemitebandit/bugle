@@ -61,7 +61,7 @@ def build():
     _ensure_path_exists(b.out_path)
 
     # finds and instantiates entries
-    entry_filepaths = b.discover_entries(b.entry_path)
+    entry_filepaths = b.discover_files(b.entry_path)
     entries = [entry.Entry(f) for f in entry_filepaths]
     for e in entries:
         if not e.valid:
