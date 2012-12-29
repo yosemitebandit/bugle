@@ -13,10 +13,20 @@
 {% block content %}
 
 <div class='tags-container offset1 span3'>
-    {% for tag in tags %}
-    <a href="../{{ tag['name'].replace(' ', '-') }}">
-        <h6>{{ tag['name']|upper }} ({{ tag['count'] }})</h6>
-    </a>
+    {% for t in tags %}
+        {% if t['name'] == tag %}
+            <h6>
+                <span class='indicator'>>
+                {{ t['name']|upper }} ({{ t['count'] }})
+                </span>
+            </h6>
+        {% else %}
+            <a href="../{{ t['name'].replace(' ', '-') }}">
+                <h6>
+                    {{ t['name']|upper }} ({{ t['count'] }})
+                </h6>
+            </a>
+        {% endif %}
     {% endfor %}
 </div>
 
