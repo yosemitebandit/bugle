@@ -1,5 +1,6 @@
 title: Arduino learnin
 created: November, 2012
+updated: December 3, 2012
 blurb: some initial experimentation with the arduino
 tags:
     - arduino
