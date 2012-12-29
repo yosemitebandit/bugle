@@ -104,6 +104,18 @@ def build():
             if tag in e.config['tags']:
                 tagged_entries.append(e)
 
+
+        # sort the entries by date
+        # first convert dates to a datetime
+        for e in tagged_entries:
+            if 'updated' in e.config.keys():
+                e.config['dt'] = e._convert_to_datetime(e.config['updated'])
+            else:
+                e.config['dt'] = e._convert_to_datetime(e.config['created'])
+
+        tagged_entries.sort(key=lambda e: e.config['dt'], reverse=True)
+
+
         # create a jinja env
         environ = Environment(loader=FileSystemLoader(b.template_path))
         template = environ.get_template('tag.html')
