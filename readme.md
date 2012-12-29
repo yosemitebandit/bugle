@@ -1,9 +1,8 @@
-Hey, a website, built from markdown.
-There are projects and notes.
+Oh, a static site built from markdown.
+There are entries and tags.
 A home page and something about the author.
 
-A python script builds up the index of notes and projects.
-And each note and project is rendered and injected into templates.
+A python script builds up the tag indices and renders entries.
 
 
 ### Source
@@ -59,9 +58,9 @@ Each of these markdown files is secretly half `yaml`:
 So that's `---` as a separator between the metadata and the content.
 The value of `thumb` is shown in the indices.
 Set a custom URL with the optional `route` parameter.
-The date-type parameters, `created` and `updated`, must be of the form `September, 2012`, `September 10, 2012`.
+The date-type parameters, `created` and `updated`, must be of the form `September, 2012` or `September 10, 2012`.
 
-Basic templates, those are where you'd expect.
+Templates are in the source directory, they use Jinja syntax.
 Tagged entries can also be gathered up under one roof.
 
     - src/
@@ -98,10 +97,15 @@ The build script does the following:
  7. pulls relevant css and js into templates
  8. saves resulting files in output directory
 
-Generate the html pages with fabric
+Start this process with fabric:
 
     $ ./path/to/venv/bin/activate
-    (venv)$ fab build
+    (venv)$ fab dev build
+
+Clean up the build via:
+
+    $ ./path/to/venv/bin/activate
+    (venv)$ fab dev clean
 
 
 ### Run the dev server
