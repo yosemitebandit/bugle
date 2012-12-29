@@ -7,7 +7,7 @@ import sys
 from fabric.api import local, env
 from jinja2 import Environment, FileSystemLoader
 
-from bugle import bugle, entry
+from bugle import bugle, entry, meta
 
 def prod():
     env.user = 'matt'
@@ -69,8 +69,21 @@ def build():
                     , e.validation_message)
             sys.exit()
 
+
+    # find and instantiate meta files
+    meta_filepaths = b.discover_files(b.meta_path)
+    meta_files = [meta.Meta(f) for f in meta_filepaths]
+    for m in meta_files:
+        if not m.valid:
+            print 'validation failed for %s with message %s.' % (m
+                    , m.validation_message)
+            sys.exit()
+    # sort them by the slug
+    meta_files.sort(key=lambda k: k.slug)
+
+
     # slugs from tags and entries should all be unique together
-    if not b.verify_unique_routes(entries):
+    if not b.verify_unique_routes(entries, meta_files):
         print 'paths not unique'
         sys.exit()
 
@@ -92,7 +105,7 @@ def build():
         # create a jinja env and render the template
         environ = Environment(loader=FileSystemLoader(b.template_path))
         template = environ.get_template('entry.html')
-        html = template.render(entry=e, tags=tags)
+        html = template.render(entry=e, tags=tags, meta_files=meta_files)
 
         # write the page
         with open(os.path.join(out_dir, 'index.html'), 'w') as f:
@@ -114,7 +127,7 @@ def build():
         environ = Environment(loader=FileSystemLoader(b.template_path))
         template = environ.get_template('tag.html')
         html = template.render(tags=tags, tag=tag['name']
-                , entries=tagged_entries)
+                , entries=tagged_entries, meta_files=meta_files)
 
         # write the page
         tag_slug = tag['name'].replace(' ', '-')
@@ -122,6 +135,27 @@ def build():
         _ensure_path_exists(out_dir)
         with open(os.path.join(out_dir, 'index.html'), 'w') as f:
             f.write(html)
+
+    # render the meta pages
+    for m in meta_files:
+        # create a jinja env and render the template
+        environ = Environment(loader=FileSystemLoader(b.template_path))
+        template = environ.get_template('entry.html')
+        html = template.render(entry=m, tags=tags, meta_files=meta_files
+                , current_page=m.slug)
+
+        # check for the root page
+        if m.slug == '':
+            out_dir = b.out_path
+        else:
+            # write the page
+            out_dir = os.path.join(b.out_path, m.slug)
+            _ensure_path_exists(out_dir)
+
+        # write the file
+        with open(os.path.join(out_dir, 'index.html'), 'w') as f:
+            f.write(html)
+
 
 
 def _ensure_path_exists(path):

@@ -20,6 +20,7 @@ class Bugle(object):
         self.source_path = source_path
         self.entry_path = os.path.join(source_path, 'entries')
         self.template_path = os.path.join(source_path, 'templates')
+        self.meta_path = os.path.join(source_path, 'meta')
         self.css_path = os.path.join(source_path, 'static/css')
         self.out_path = out_path
 
@@ -70,17 +71,19 @@ class Bugle(object):
         return counted_tags
 
 
-    def verify_unique_routes(self, entries):
-        ''' checks that all tags and all entries are uniquely routed
+    def verify_unique_routes(self, entries, meta_files):
+        ''' routes generated from entries, tags and meta files should be unique
         '''
         tags = self.compile_tags(entries)
         tag_slugs = [tag['name'].replace(' ', '-') for tag in tags]
 
         entry_slugs = [e.slug for e in entries]
+        meta_slugs = [m.slug for m in meta_files]
 
         all_slugs = []
         all_slugs.extend(tag_slugs)
         all_slugs.extend(entry_slugs)
+        all_slugs.extend(meta_slugs)
 
         # creating a set will eliminate duplicates
         if len(all_slugs) != len(set(all_slugs)):

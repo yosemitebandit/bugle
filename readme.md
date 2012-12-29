@@ -14,8 +14,17 @@ The organization of `src/`:
        |- templates/
        \- static/
 
-The root and about pages are contained in `meta/`.
-These pages are HTML, not markdown, and are injected into the `base.html` template.
+Pages within `meta/` are given their own place in the sidebar.
+You might consider a "home" and "about" page, for instance.
+They are rendered with the `entry.html` template.
+Each of these files is half `yaml`:
+
+    - title: about
+    - route: huh
+    ---
+    well, since you asked..
+
+Only the `title` param is required.
 
 The real content is in `entries/` in the form of markdown files.
 Some of these files are project write-ups, others are blog entries:

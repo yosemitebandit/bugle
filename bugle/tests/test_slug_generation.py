@@ -6,7 +6,7 @@
 
 import unittest
 
-from bugle import bugle, entry
+from bugle import bugle, entry, meta
 
 class SlugGenerationTest(unittest.TestCase):
     
@@ -17,6 +17,16 @@ class SlugGenerationTest(unittest.TestCase):
 
     def tearDown(self):
         pass
+
+    def test_meta_slug(self):
+        filepath = self.b.meta_path + '/about.md'
+        m = meta.Meta(filepath)
+        self.assertEqual(m.slug, 'about')
+
+    def test_meta_root_slug(self):
+        filepath = self.b.meta_path + '/home.md'
+        m = meta.Meta(filepath)
+        self.assertEqual(m.slug, '')
 
     def test_basic_slug(self):
         filepath = self.b.entry_path + '/basic.md'
