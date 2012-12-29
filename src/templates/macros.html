@@ -1,0 +1,28 @@
+{# utilities to be imported by other templates
+#}
+
+{% macro tag_sidebar(tags, tag) %}
+{# shows a list of tags with counts
+if a tag is given, show an indicator at matching tags
+#}
+
+<div class='tags-container offset1 span3'>
+    {% for t in tags %}
+        {% if t['name'] == tag %}
+            <h6>
+                <span class='indicator'>
+                    <span class='arrow'>&raquo;</span>
+                    {{ t['name']|upper }} ({{ t['count'] }})
+                </span>
+            </h6>
+        {% else %}
+            <a href="../{{ t['name'].replace(' ', '-') }}">
+                <h6>
+                    {{ t['name']|upper }} ({{ t['count'] }})
+                </h6>
+            </a>
+        {% endif %}
+    {% endfor %}
+</div>
+
+{% endmacro %}

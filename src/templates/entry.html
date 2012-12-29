@@ -13,14 +13,9 @@
 
 
 {% block content %}
+{% from 'macros.html' import tag_sidebar with context %}
 
-<div class='tags-container offset1 span3'>
-    {% for tag in tags %}
-    <a href="../{{ tag['name'].replace(' ', '-') }}">
-        <h6>{{ tag['name']|upper }} ({{ tag['count'] }})</h6>
-    </a>
-    {% endfor %}
-</div>
+{{ tag_sidebar(tags, None) }}
 
 <div class='span8'>
 
