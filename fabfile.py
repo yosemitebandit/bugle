@@ -60,6 +60,7 @@ def build():
     b = bugle.Bugle(env.source_path, env.out_path)
     _ensure_path_exists(b.out_path)
 
+    # finds and instantiates entries
     entry_filepaths = b.discover_entries(b.entry_path)
     entries = [entry.Entry(f) for f in entry_filepaths]
     for e in entries:
@@ -68,23 +69,14 @@ def build():
                     , e.validation_message)
             sys.exit()
 
-    tags = b.compile_tags(entries)
-    counted_tags = []
-    for tag in tags:
-        count = 0
-        for e in entries:
-            if tag in e.config['tags']:
-                count += 1
-
-        counted_tags.append((tag, count))
-            
-
-    # slugs from tags and slugs from entries should all be unique together
+    # slugs from tags and entries should all be unique together
     if not b.verify_unique_routes(entries):
         print 'paths not unique'
         sys.exit()
 
-    
+    # find all tags
+    tags = b.compile_tags(entries)
+
     # copy over the css
     css_files = os.path.join(b.css_path, '*.css')
     css_out_path = os.path.join(b.out_path, 'css')
@@ -101,7 +93,7 @@ def build():
         environ = Environment(loader=FileSystemLoader(b.template_path))
         template = environ.get_template('entry.html')
 
-        html = template.render(entry=e, tags=tags, counted_tags=counted_tags)
+        html = template.render(entry=e, tags=tags)
 
         with open(os.path.join(out_dir, 'index.html'), 'w') as f:
             f.write(html)
@@ -110,7 +102,7 @@ def build():
     for tag in tags:
         tagged_entries = []
         for e in entries:
-            if tag in e.config['tags']:
+            if tag['name'] in e.config['tags']:
                 tagged_entries.append(e)
 
 
@@ -129,9 +121,9 @@ def build():
         environ = Environment(loader=FileSystemLoader(b.template_path))
         template = environ.get_template('tag.html')
 
-        html = template.render(tags=tags, tag=tag, entries=tagged_entries, counted_tags=counted_tags)
+        html = template.render(tags=tags, tag=tag['name'], entries=tagged_entries)
 
-        tag_slug = tag.replace(' ', '-')
+        tag_slug = tag['name'].replace(' ', '-')
         out_dir = os.path.join(b.out_path, tag_slug)
         _ensure_path_exists(out_dir)
 

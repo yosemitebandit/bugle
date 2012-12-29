@@ -43,21 +43,38 @@ class Bugle(object):
 
     def compile_tags(self, entries):
         ''' find all unique tags among the specified entries
+        counts entries belonging to that tag
+        sorts based on the count
 
-        returns set('python', 'twilio')
+        returns [{'tag': 'python', 'count': 8}, {'tag': 'twilio', 'count': 4}]
         '''
         tags = []
         for entry in entries:
             tags.extend(entry.config['tags'])
 
-        return set(tags)
+        # de-duplicate
+        tags = list(set(tags))
+
+        # count entries associated with each tag
+        counted_tags = []
+        for tag in tags:
+            count = 0
+            for entry in entries:
+                if tag in entry.config['tags']:
+                    count += 1
+            counted_tags.append({'name': tag, 'count': count})
+
+        # sort by count attr
+        counted_tags.sort(key=lambda t: t['count'], reverse=True)
+
+        return counted_tags
 
 
     def verify_unique_routes(self, entries):
         ''' checks that all tags and all entries are uniquely routed
         '''
         tags = self.compile_tags(entries)
-        tag_slugs = [tag.replace(' ', '-') for tag in tags]
+        tag_slugs = [tag['name'].replace(' ', '-') for tag in tags]
 
         entry_slugs = [e.slug for e in entries]
 

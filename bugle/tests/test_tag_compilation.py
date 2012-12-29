@@ -28,4 +28,8 @@ class CompilationTest(unittest.TestCase):
             entries.append(entry.Entry(filepath))
 
         tags = self.b.compile_tags(entries)
-        self.assertEqual(tags, set(['notes', 'projects', 'python', 'twilio']))
+        expected_tags = [{'count': 3, 'name': 'python'}
+                , {'count': 3, 'name': 'twilio'}
+                , {'count': 1, 'name': 'notes'}
+                , {'count': 1, 'name': 'projects'}]
+        self.assertEqual(tags, expected_tags)

@@ -15,9 +15,9 @@
 {% block content %}
 
 <div class='tags-container offset1 span3'>
-    {% for tag in counted_tags %}
-    <a href="../{{ tag[0].replace(' ', '-') }}">
-        <h6>{{ tag[0]|upper }} ({{ tag[1] }})</h6>
+    {% for tag in tags %}
+    <a href="../{{ tag['name'].replace(' ', '-') }}">
+        <h6>{{ tag['name']|upper }} ({{ tag['count'] }})</h6>
     </a>
     {% endfor %}
 </div>
