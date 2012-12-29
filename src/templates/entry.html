@@ -1,27 +1,36 @@
 {% extends "base.html" %}
 
+
+{% block header %}
+
+<div class='offset4 span8'>
+    <h4>{{ entry.config.title }}
+        <small>{{ entry.config.created }}</small>
+    </h4>
+</div>
+
+{% endblock %}
+
+
 {% block content %}
 
-<div class='row'>
-    <div class='tags-container offset1 span3'>
-        {% for tag in tags %}
-            <p>
-                <a href='../{{ tag.replace(' ', '-') }}'>{{ tag }}</a>
-            </p>
+<div class='tags-container offset1 span3'>
+    {% for tag in tags %}
+    <a href="../{{ tag.replace(' ', '-') }}">
+        <h6>{{ tag|upper }}</h6>
+    </a>
+    {% endfor %}
+</div>
+
+<div class='span8'>
+
+    {{ entry.rendered_markdown }}
+
+    <span class='pull-right'>
+        {% for tag in entry.config.tags %}
+        <a href="../{{ tag.replace(' ', '-') }}"><small>{{ tag|upper }}</small></a>
         {% endfor %}
-    </div>
-
-    <div class='span8'>
-        <h4>{{ entry.config.title }}</h4>
-        <p>{{ entry.config.created }}</p>
-
-        {{ entry.rendered_markdown }}
-
-        <i class='pull-right'>tags:
-            {% for tag in entry.config.tags %}
-                <a href="../{{ tag.replace(' ', '-') }}">{{ tag }}</a>
-            {% endfor %}
-        </i>
-    </div>
+    </span>
+</div>
 
 {% endblock %}

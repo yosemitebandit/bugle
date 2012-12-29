@@ -1,29 +1,35 @@
 {% extends "base.html" %}
 
+
+{% block header %}
+
+<div class='offset4 span8'>
+    <h6>{{ tag|upper }}</h6>
+</div>
+
+{% endblock %}
+
+
 {% block content %}
 
-<div class='row'>
-    <div class='tags-container offset1 span3'>
-        {% for tag in tags %}
-            <p>
-                <a href='../{{ tag.replace(' ', '-') }}'>{{ tag }}</a>
-            </p>
-        {% endfor %}
-    </div>
+<div class='tags-sidebar offset1 span3'>
+    {% for tag in tags %}
+    <a href="../{{ tag.replace(' ', '-') }}">
+        <h6>{{ tag|upper }}</h6>
+    </a>
+    {% endfor %}
+</div>
 
-    <div class='span8'>
+<div class='span8'>
 
-        <h2>{{ tag }}</h2>
-
-        {% for entry in entries %}
-        <a href='../{{ entry.slug }}'>
-            <div class='well'>
-                <h4> {{ entry.config.title }}</h4>
-                <p>{{ entry.config.blurb }}</p>
-            </div>
-        </a>
-        {% endfor %}
-    </div>
+    {% for entry in entries %}
+    <a href='../{{ entry.slug }}'>
+        <blockquote>
+            <h4> {{ entry.config.title }}</h4>
+            <p>{{ entry.config.blurb }}</p>
+        </blockquote>
+    </a>
+    {% endfor %}
 </div>
 
 {% endblock %}

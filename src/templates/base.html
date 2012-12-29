@@ -3,16 +3,31 @@
     <head>
         <link rel="stylesheet" href="../css/bootstrap.css">
         <style>
-          .tags-container {
-            margin-top: 50px;
+          .header {
+            padding: 15px 0 15px 0;
+          }
+          .tags-sidebar {
+            padding-top: 10px;
           }
         </style>
     </head>
 
     <body>
 
-    {% block content %}
-    {% endblock %}
+      <div class='header row'>
+        {% block header %}
+        {% endblock %}
+      </div>
+
+      <div class='row'>
+        {% block content %}
+        {% endblock %}
+      </div>
+
+      <div class='row'>
+        {% block footer %}
+        {% endblock %}
+      </div>
 
     </body>
 
