@@ -1,4 +1,3 @@
-import errno
 import os
 import SimpleHTTPServer
 import SocketServer
@@ -58,7 +57,7 @@ def clean():
 
 def build():
     b = bugle.Bugle(env.source_path, env.out_path)
-    _ensure_path_exists(b.out_path)
+    b.ensure_path_exists(b.out_path)
 
     # finds and instantiates entries
     entry_filepaths = b.discover_files(b.entry_path)
@@ -93,14 +92,14 @@ def build():
     # copy over the css
     css_files = os.path.join(b.css_path, '*.css')
     css_out_path = os.path.join(b.out_path, 'css')
-    _ensure_path_exists(css_out_path)
+    b.ensure_path_exists(css_out_path)
     local('cp -L %s %s' % (css_files, css_out_path))
 
 
     # render entry templates
     for e in entries:
         out_dir = os.path.join(b.out_path, e.slug)
-        _ensure_path_exists(out_dir)
+        b.ensure_path_exists(out_dir)
 
         # create a jinja env and render the template
         environ = Environment(loader=FileSystemLoader(b.template_path))
@@ -132,7 +131,7 @@ def build():
         # write the page
         tag_slug = tag['name'].replace(' ', '-')
         out_dir = os.path.join(b.out_path, tag_slug)
-        _ensure_path_exists(out_dir)
+        b.ensure_path_exists(out_dir)
         with open(os.path.join(out_dir, 'index.html'), 'w') as f:
             f.write(html)
 
@@ -150,19 +149,8 @@ def build():
         else:
             # write the page
             out_dir = os.path.join(b.out_path, m.slug)
-            _ensure_path_exists(out_dir)
+            b.ensure_path_exists(out_dir)
 
         # write the file
         with open(os.path.join(out_dir, 'index.html'), 'w') as f:
             f.write(html)
-
-
-
-def _ensure_path_exists(path):
-    # from http://stackoverflow.com/a/5032238/232638
-    try:
-        os.makedirs(path)
-    except OSError as exception:
-        if exception.errno != errno.EEXIST:
-            raise
-

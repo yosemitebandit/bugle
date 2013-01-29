@@ -2,6 +2,7 @@
 ''' bugle
 a generator of static sites
 '''
+import errno
 import os
 
 
@@ -91,3 +92,10 @@ class Bugle(object):
         else:
             return True
 
+    def ensure_path_exists(self, path):
+        # from http://stackoverflow.com/a/5032238/232638
+        try:
+            os.makedirs(path)
+        except OSError as exception:
+            if exception.errno != errno.EEXIST:
+                raise
