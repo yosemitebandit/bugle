@@ -3,30 +3,42 @@ import SimpleHTTPServer
 import SocketServer
 import sys
 
-from fabric.api import local, env
+from fabric.api import local, env, put, run, cd
 from jinja2 import Environment, FileSystemLoader
 
 from bugle import bugle, entry, meta
 
 def prod():
     env.user = 'matt'
-    env.host = 'kepler'
-    env.dir = '/home/matt/yosemitebandit.com/bugle'
-    env.root = 'yosemitebandit.com'
-    env.source_path = 'src/'
-    env.out_path = 'out/'
+    env.hosts = ['kepler']
+    env.project_dir = '/home/matt/notes.yosemitebandit.com'
+    env.project_site_dir = 'public'
+    env.source_path = 'src'
+    env.out_path = 'out'
 
-def dev():
-    env.user = 'matt'
-    env.host = 'kepler'
-    env.dir = '/home/matt/yosemitebandit.com/public/test'
-    env.root = '127.0.0.1:8000'
-    env.source_path = 'src/'
-    env.out_path = 'out/'
 
 def deploy():
-    pass
-    #local('rsync -avz --del build/ %s@%s:%s' % (env.user, env.host, env.dir))
+    ''' pack it up and send it to the server
+
+    maybe one day rsync?
+    local('rsync -avz --del build/ %s@%s:%s' % (env.user, env.hosts, env.dir))
+    '''
+    # generate the tarball
+    out_tgz = '%s.tgz' % env.out_path
+    local('tar czvf %s %s' % (out_tgz, env.out_path))
+    # send it to the remote
+    remote_tgz = '/tmp/%s' % out_tgz
+    put(out_tgz, remote_tgz)
+    local('rm %s' % out_tgz)
+    # unpack and move it into place
+    run('mv %s %s' % (remote_tgz, env.project_dir))
+    with cd(env.project_dir):
+        run('tar -xf %s' % os.path.join(env.project_dir, out_tgz))
+        run('rm %s' % out_tgz)
+        # overwrite
+        run('rm -rf %s && mv %s %s' % (env.project_site_dir, env.out_path
+            , env.project_site_dir))
+
 
 def serve():
     ''' from http://stackoverflow.com/a/10614360/232638
