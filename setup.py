@@ -9,6 +9,9 @@ yet another static site-generator
 
 from setuptools import setup
 
+with open('requirements.txt') as f:
+    libs = f.readlines()
+
 packages = [
         'bugle'
 ]
@@ -25,7 +28,7 @@ setup(
     packages=packages,
     zip_safe=False,
     include_package_data=True,
-    install_requires=[],
+    install_requires=libs,
     platforms='any',
     classifiers=[
         'Environment :: Web Environment',
