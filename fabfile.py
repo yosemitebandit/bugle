@@ -107,6 +107,12 @@ def build():
     b.ensure_path_exists(css_out_path)
     local('cp -L %s %s' % (css_files, css_out_path))
 
+    # copy over the js
+    js_files = os.path.join(b.js_path, '*.js')
+    js_out_path = os.path.join(b.out_path, 'js')
+    b.ensure_path_exists(js_out_path)
+    local('cp -L %s %s' % (js_files, js_out_path))
+
 
     # render entry templates
     for e in entries:

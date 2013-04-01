@@ -23,6 +23,7 @@ class Bugle(object):
         self.template_path = os.path.join(source_path, 'templates')
         self.meta_path = os.path.join(source_path, 'meta')
         self.css_path = os.path.join(source_path, 'static/css')
+        self.js_path = os.path.join(source_path, 'static/js')
         self.out_path = out_path
 
 
