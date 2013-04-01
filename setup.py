@@ -18,7 +18,7 @@ packages = [
 
 setup(
     name='bugle-sites',
-    version='0.0.3',
+    version='0.0.4',
     url='https://github.com/yosemitebandit/bugle',
     license='MIT',
     author='Matt Ball',
